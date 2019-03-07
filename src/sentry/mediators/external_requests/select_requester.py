@@ -34,7 +34,7 @@ class SelectRequester(Mediator):
 
     def _build_url(self):
         domain = urlparse(self.sentry_app.webhook_url).netloc
-        url = u'https://{}{}'.format(domain, self.uri)
+        url = u'http://{}{}'.format(domain, self.uri)
         params = {'installationId': self.install.uuid}
         if self.project:
             params['projectSlug'] = self.project.slug
@@ -78,9 +78,9 @@ class SelectRequester(Mediator):
         choices = []
 
         for option in resp:
-            choices.append([option['label'], option['value']])
+            choices.append([option['value'], option['label']])
             if option.get('default'):
-                response['default'] = [option['label'], option['value']]
+                response['defaultValue'] = option['value']
 
         response['choices'] = choices
         return response
